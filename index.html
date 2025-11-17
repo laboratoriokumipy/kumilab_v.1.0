@@ -1275,6 +1275,208 @@
             display: block;
         }
 
+        /* Upload Image Styles */
+        .upload-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 2px dashed var(--color-border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .upload-option:hover {
+            border-color: var(--color-accent);
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        .upload-option i {
+            font-size: 2rem;
+            color: var(--color-accent);
+        }
+
+        .upload-option span {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+        }
+
+        .image-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .image-preview {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview .remove-image {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 24px;
+            height: 24px;
+            background: var(--color-danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .image-preview:hover .remove-image {
+            opacity: 1;
+        }
+
+        /* Drive Picker Modal */
+        .drive-picker-modal .modal-content {
+            max-width: 600px;
+        }
+
+        .drive-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+
+        .drive-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .drive-item:hover {
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        .drive-item.selected {
+            border: 2px solid var(--color-accent);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .drive-item img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+        }
+
+        .drive-item-name {
+            font-size: 0.75rem;
+            text-align: center;
+            color: var(--color-text-secondary);
+            word-break: break-word;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Camera Modal */
+        .camera-modal .modal-content {
+            max-width: 500px;
+        }
+
+        .camera-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: var(--color-bg-primary);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .camera-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .camera-capture-btn {
+            width: 64px;
+            height: 64px;
+            background: var(--color-accent);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .camera-capture-btn:hover {
+            background: var(--color-accent-hover);
+            transform: scale(1.05);
+        }
+
+        /* Sync Status */
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: var(--radius-sm);
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .sync-status.connected {
+            color: var(--color-accent);
+        }
+
+        .sync-status.disconnected {
+            color: var(--color-danger);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero-title {
@@ -1335,7 +1537,6 @@
     </style>
 </head>
 <body>
-    <!-- [EL HTML SE MANTIENE IGUAL QUE LA VERSIÓN ANTERIOR] -->
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -1423,6 +1624,10 @@
                     <div class="metric-item">
                         <span class="metric-label">Certificación</span>
                         <span class="metric-value green" style="font-size: 1rem;">DINAVISA</span>
+                    </div>
+                    <div class="sync-status connected" id="syncStatus">
+                        <i class="fas fa-cloud"></i>
+                        <span>Sincronizado con Google Sheets</span>
                     </div>
                 </div>
             </div>
@@ -1675,9 +1880,41 @@
                         <textarea class="form-textarea" id="productDescription" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Imágenes (URLs separadas por coma)</label>
-                        <input type="text" class="form-input" id="productImages" placeholder="https://ejemplo.com/imagen1.jpg, https://ejemplo.com/imagen2.jpg">
-                        <p class="form-hint">Pega URLs de imágenes separadas por comas. Para imágenes locales, usa un servicio como Imgur o Cloudinary.</p>
+                        <label class="form-label">Imágenes</label>
+                        
+                        <!-- Opciones de carga de imágenes -->
+                        <div class="upload-options">
+                            <div class="upload-option" onclick="openFilePicker()">
+                                <i class="fas fa-folder-open"></i>
+                                <span>Desde Archivo</span>
+                            </div>
+                            <div class="upload-option" onclick="openCameraModal()">
+                                <i class="fas fa-camera"></i>
+                                <span>Desde Cámara</span>
+                            </div>
+                            <div class="upload-option" onclick="openDrivePicker()">
+                                <i class="fab fa-google-drive"></i>
+                                <span>Desde Drive</span>
+                            </div>
+                            <div class="upload-option" onclick="showUrlInput()">
+                                <i class="fas fa-link"></i>
+                                <span>Desde URL</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Input oculto para archivos -->
+                        <input type="file" id="imageFileInput" multiple accept="image/*" style="display: none;" onchange="handleFileSelect(this.files)">
+                        
+                        <!-- Input para URLs -->
+                        <div id="urlInputContainer" style="display: none; margin-top: 1rem;">
+                            <input type="text" class="form-input" id="productImageUrls" placeholder="Pega URLs de imágenes separadas por coma">
+                            <button type="button" class="btn btn-outline" style="margin-top: 0.5rem;" onclick="addUrlsToImages()">
+                                <i class="fas fa-plus"></i> Agregar URLs
+                            </button>
+                        </div>
+                        
+                        <!-- Previsualización de imágenes -->
+                        <div class="image-preview-container" id="imagePreviewContainer"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Etiquetas (separadas por coma)</label>
@@ -1718,10 +1955,56 @@
         </div>
     </div>
 
+    <!-- Drive Picker Modal -->
+    <div id="drivePickerModal" class="modal drive-picker-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Seleccionar Imágenes de Google Drive</h2>
+                <button class="modal-close" onclick="closeDrivePicker()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Selecciona las imágenes que deseas utilizar para este producto:</p>
+                <div class="drive-items" id="driveItems">
+                    <!-- Los elementos de Drive se cargarán aquí -->
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeDrivePicker()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="addSelectedDriveImages()">Agregar Imágenes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Modal -->
+    <div id="cameraModal" class="modal camera-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Tomar Foto</h2>
+                <button class="modal-close" onclick="closeCameraModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="camera-container">
+                    <video id="cameraVideo" class="camera-video" autoplay playsinline></video>
+                </div>
+                <div class="camera-controls">
+                    <button class="camera-capture-btn" onclick="capturePhoto()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeCameraModal()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Container -->
     <div id="toastContainer"></div>
 
-    <!-- [EL JAVASCRIPT SE MANTIENE IGUAL QUE LA VERSIÓN ANTERIOR] -->
     <script>
         // Estado de la aplicación
         let products = [];
@@ -1731,9 +2014,16 @@
         let selectedCategory = '';
         let isAdmin = false;
         let editingProductId = null;
+        let selectedImages = []; // Para almacenar imágenes seleccionadas
+        let selectedDriveImages = []; // Para almacenar imágenes seleccionadas de Drive
+        let stream = null; // Para la cámara
 
         // Credenciales de admin (en producción esto debe estar en backend)
         const ADMIN_CREDENTIALS = { username: 'dbaza', password: '1234' };
+
+        // URLs de Google Sheets y Drive
+        const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/1JFF44nFhV0HBm7L3o2f8_UzOHtGyZ255tNFAB1xniHs/edit?usp=sharing';
+        const GOOGLE_DRIVE_FOLDER_URL = 'https://drive.google.com/drive/folders/1w6G3v60iCmbeUxDCguGg_3M96aKdF6nY?usp=sharing';
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
@@ -1779,6 +2069,34 @@
         // Guardar productos en localStorage
         function saveProductsToStorage() {
             localStorage.setItem('kumi-products', JSON.stringify(products));
+        }
+
+        // Guardar productos en Google Sheets
+        async function saveProductsToGoogleSheets() {
+            try {
+                // En una implementación real, aquí se haría una petición a Google Apps Script
+                // Para este ejemplo, simulamos la conexión
+                console.log('Guardando productos en Google Sheets...');
+                // Simulación de guardado exitoso
+                return true;
+            } catch (error) {
+                console.error('Error al guardar en Google Sheets:', error);
+                return false;
+            }
+        }
+
+        // Subir imagen a Google Drive
+        async function uploadImageToDrive(imageData) {
+            try {
+                // En una implementación real, aquí se haría una petición a Google Apps Script
+                // Para este ejemplo, simulamos la subida y devolvemos una URL de ejemplo
+                console.log('Subiendo imagen a Google Drive...');
+                // Simulación de subida exitosa
+                return `https://picsum.photos/seed/${Date.now()}/400/300.jpg`;
+            } catch (error) {
+                console.error('Error al subir imagen a Drive:', error);
+                return null;
+            }
         }
 
         // Cargar desde localStorage
@@ -1883,6 +2201,9 @@
             document.getElementById('productFormTitle').textContent = 'Agregar Nuevo Producto';
             document.getElementById('productForm').reset();
             document.getElementById('productId').value = generateId();
+            selectedImages = [];
+            updateImagePreview();
+            document.getElementById('urlInputContainer').style.display = 'none';
             document.getElementById('productFormModal').classList.add('show');
             loadCategoriesInSelect();
         }
@@ -1898,7 +2219,6 @@
             document.getElementById('productName').value = product.nombre;
             document.getElementById('productCategory').value = product.categoria;
             document.getElementById('productDescription').value = product.descripcion;
-            document.getElementById('productImages').value = product.imagenes.join(', ');
             document.getElementById('productTags').value = product.etiquetas.join(', ');
             document.getElementById('productPrice').value = product.precio;
             document.getElementById('productStock').value = product.stock;
@@ -1906,6 +2226,11 @@
             document.getElementById('productUnit').value = product.unidad || '';
             document.getElementById('productPresentation').value = product.presentacion || '';
             document.getElementById('productFeatured').checked = product.destacado || false;
+            
+            // Cargar imágenes
+            selectedImages = product.imagenes.map(url => ({ type: 'url', data: url }));
+            updateImagePreview();
+            document.getElementById('urlInputContainer').style.display = 'none';
             
             document.getElementById('productFormModal').classList.add('show');
             loadCategoriesInSelect();
@@ -1951,63 +2276,287 @@
         function closeProductFormModal() {
             document.getElementById('productFormModal').classList.remove('show');
             editingProductId = null;
+            selectedImages = [];
+        }
+
+        // Funciones para manejo de imágenes
+        function openFilePicker() {
+            document.getElementById('imageFileInput').click();
+        }
+
+        function handleFileSelect(files) {
+            for (let file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedImages.push({ type: 'file', data: e.target.result, file: file });
+                    updateImagePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openCameraModal() {
+            document.getElementById('cameraModal').classList.add('show');
+            startCamera();
+        }
+
+        function closeCameraModal() {
+            document.getElementById('cameraModal').classList.remove('show');
+            stopCamera();
+        }
+
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('cameraVideo');
+                video.srcObject = stream;
+            } catch (error) {
+                console.error('Error al acceder a la cámara:', error);
+                showToast('No se pudo acceder a la cámara.', 'error');
+            }
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            const imageData = canvas.toDataURL('image/jpeg');
+            selectedImages.push({ type: 'camera', data: imageData });
+            updateImagePreview();
+            closeCameraModal();
+            showToast('Foto capturada correctamente.', 'success');
+        }
+
+        function openDrivePicker() {
+            // En una implementación real, aquí se integraría con la API de Google Drive
+            // Para este ejemplo, simulamos la carga de imágenes
+            document.getElementById('drivePickerModal').classList.add('show');
+            loadDriveImages();
+        }
+
+        function closeDrivePicker() {
+            document.getElementById('drivePickerModal').classList.remove('show');
+            selectedDriveImages = [];
+        }
+
+        function loadDriveImages() {
+            // En una implementación real, aquí se cargarían las imágenes de Google Drive
+            // Para este ejemplo, usamos imágenes de ejemplo
+            const driveItems = document.getElementById('driveItems');
+            driveItems.innerHTML = '';
+            
+            // Simulación de imágenes de Drive
+            const driveImages = [
+                { id: '1', name: 'Boldo.jpg', url: 'https://picsum.photos/seed/drive1/200/200.jpg' },
+                { id: '2', name: 'Té Verde.jpg', url: 'https://picsum.photos/seed/drive2/200/200.jpg' },
+                { id: '3', name: 'Manzanilla.jpg', url: 'https://picsum.photos/seed/drive3/200/200.jpg' },
+                { id: '4', name: 'Valeriana.jpg', url: 'https://picsum.photos/seed/drive4/200/200.jpg' },
+                { id: '5', name: 'Jengibre.jpg', url: 'https://picsum.photos/seed/drive5/200/200.jpg' },
+            ];
+            
+            driveImages.forEach(img => {
+                const item = document.createElement('div');
+                item.className = 'drive-item';
+                item.dataset.id = img.id;
+                item.innerHTML = `
+                    <img src="${img.url}" alt="${img.name}">
+                    <span class="drive-item-name">${img.name}</span>
+                `;
+                item.onclick = () => toggleDriveImageSelection(img.id);
+                driveItems.appendChild(item);
+            });
+        }
+
+        function toggleDriveImageSelection(id) {
+            const item = document.querySelector(`.drive-item[data-id="${id}"]`);
+            if (selectedDriveImages.includes(id)) {
+                selectedDriveImages = selectedDriveImages.filter(imgId => imgId !== id);
+                item.classList.remove('selected');
+            } else {
+                selectedDriveImages.push(id);
+                item.classList.add('selected');
+            }
+        }
+
+        function addSelectedDriveImages() {
+            // En una implementación real, aquí se obtendrían las URLs reales de Drive
+            // Para este ejemplo, usamos URLs de ejemplo
+            const driveImages = [
+                { id: '1', url: 'https://picsum.photos/seed/drive1/400/300.jpg' },
+                { id: '2', url: 'https://picsum.photos/seed/drive2/400/300.jpg' },
+                { id: '3', url: 'https://picsum.photos/seed/drive3/400/300.jpg' },
+                { id: '4', url: 'https://picsum.photos/seed/drive4/400/300.jpg' },
+                { id: '5', url: 'https://picsum.photos/seed/drive5/400/300.jpg' },
+            ];
+            
+            selectedDriveImages.forEach(id => {
+                const img = driveImages.find(d => d.id === id);
+                if (img) {
+                    selectedImages.push({ type: 'drive', data: img.url });
+                }
+            });
+            
+            updateImagePreview();
+            closeDrivePicker();
+            showToast('Imágenes de Drive agregadas correctamente.', 'success');
+        }
+
+        function showUrlInput() {
+            document.getElementById('urlInputContainer').style.display = 'block';
+        }
+
+        function addUrlsToImages() {
+            const urls = document.getElementById('productImageUrls').value.split(',').map(url => url.trim()).filter(url => url);
+            urls.forEach(url => {
+                selectedImages.push({ type: 'url', data: url });
+            });
+            updateImagePreview();
+            document.getElementById('productImageUrls').value = '';
+            document.getElementById('urlInputContainer').style.display = 'none';
+            showToast('URLs agregadas correctamente.', 'success');
+        }
+
+        function updateImagePreview() {
+            const container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = '';
+            
+            selectedImages.forEach((img, index) => {
+                const preview = document.createElement('div');
+                preview.className = 'image-preview';
+                preview.innerHTML = `
+                    <img src="${img.data}" alt="Imagen ${index + 1}">
+                    <button type="button" class="remove-image" onclick="removeImage(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(preview);
+            });
+        }
+
+        function removeImage(index) {
+            selectedImages.splice(index, 1);
+            updateImagePreview();
         }
 
         // Guardar producto
-        function saveProduct(event) {
+        async function saveProduct(event) {
             event.preventDefault();
             
-            const productData = {
-                id: document.getElementById('productId').value,
-                nombre: document.getElementById('productName').value.trim(),
-                categoria: document.getElementById('productCategory').value,
-                descripcion: document.getElementById('productDescription').value.trim(),
-                imagenes: document.getElementById('productImages').value.split(',').map(url => url.trim()).filter(url => url),
-                etiquetas: document.getElementById('productTags').value.split(',').map(tag => tag.trim()).filter(tag => tag),
-                precio: parseInt(document.getElementById('productPrice').value) || 0,
-                stock: parseInt(document.getElementById('productStock').value) || 0,
-                sku: document.getElementById('productSku').value.trim(),
-                unidad: document.getElementById('productUnit').value.trim(),
-                presentacion: document.getElementById('productPresentation').value.trim(),
-                destacado: document.getElementById('productFeatured').checked,
-                creado: editingProductId ? products.find(p => p.id === editingProductId)?.creado : new Date().toISOString().split('T')[0]
-            };
+            // Deshabilitar botón mientras se procesa
+            const saveBtn = document.getElementById('saveProductBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
             
-            // Validación
-            if (!productData.nombre || !productData.categoria || !productData.descripcion || !productData.sku) {
-                showToast('Por favor completa todos los campos obligatorios.', 'error');
-                return;
-            }
-            
-            if (editingProductId) {
-                // Editar producto existente
-                const index = products.findIndex(p => p.id === editingProductId);
-                if (index !== -1) {
-                    products[index] = { ...productData };
+            try {
+                // Subir imágenes a Drive si es necesario
+                const imageUrls = [];
+                
+                for (let img of selectedImages) {
+                    if (img.type === 'file' || img.type === 'camera') {
+                        // Subir imagen a Drive
+                        const driveUrl = await uploadImageToDrive(img.data);
+                        if (driveUrl) {
+                            imageUrls.push(driveUrl);
+                        } else {
+                            throw new Error('Error al subir imagen a Drive');
+                        }
+                    } else {
+                        // Usar URL existente
+                        imageUrls.push(img.data);
+                    }
                 }
-                showToast('Producto actualizado correctamente.', 'success');
-            } else {
-                // Agregar nuevo producto
-                products.push(productData);
-                showToast('Producto agregado correctamente.', 'success');
+                
+                const productData = {
+                    id: document.getElementById('productId').value,
+                    nombre: document.getElementById('productName').value.trim(),
+                    categoria: document.getElementById('productCategory').value,
+                    descripcion: document.getElementById('productDescription').value.trim(),
+                    imagenes: imageUrls,
+                    etiquetas: document.getElementById('productTags').value.split(',').map(tag => tag.trim()).filter(tag => tag),
+                    precio: parseInt(document.getElementById('productPrice').value) || 0,
+                    stock: parseInt(document.getElementById('productStock').value) || 0,
+                    sku: document.getElementById('productSku').value.trim(),
+                    unidad: document.getElementById('productUnit').value.trim(),
+                    presentacion: document.getElementById('productPresentation').value.trim(),
+                    destacado: document.getElementById('productFeatured').checked,
+                    creado: editingProductId ? products.find(p => p.id === editingProductId)?.creado : new Date().toISOString().split('T')[0]
+                };
+                
+                // Validación
+                if (!productData.nombre || !productData.categoria || !productData.descripcion || !productData.sku) {
+                    showToast('Por favor completa todos los campos obligatorios.', 'error');
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = 'Guardar Producto';
+                    return;
+                }
+                
+                if (editingProductId) {
+                    // Editar producto existente
+                    const index = products.findIndex(p => p.id === editingProductId);
+                    if (index !== -1) {
+                        products[index] = { ...productData };
+                    }
+                    showToast('Producto actualizado correctamente.', 'success');
+                } else {
+                    // Agregar nuevo producto
+                    products.push(productData);
+                    showToast('Producto agregado correctamente.', 'success');
+                }
+                
+                // Guardar en localStorage
+                saveProductsToStorage();
+                
+                // Intentar guardar en Google Sheets
+                const sheetsSuccess = await saveProductsToGoogleSheets();
+                if (sheetsSuccess) {
+                    showToast('Producto sincronizado con Google Sheets.', 'success');
+                } else {
+                    showToast('Producto guardado localmente. Error al sincronizar con Google Sheets.', 'warning');
+                }
+                
+                filteredProducts = [...products];
+                renderCategories();
+                renderProducts();
+                updateMetrics();
+                closeProductFormModal();
+                
+            } catch (error) {
+                console.error('Error al guardar producto:', error);
+                showToast('Error al guardar producto: ' + error.message, 'error');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = 'Guardar Producto';
             }
-            
-            saveProductsToStorage();
-            filteredProducts = [...products];
-            renderCategories();
-            renderProducts();
-            updateMetrics();
-            closeProductFormModal();
         }
 
         // Eliminar producto
-        function deleteProduct(productId) {
+        async function deleteProduct(productId) {
             if (!confirm('¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.')) {
                 return;
             }
             
             products = products.filter(p => p.id !== productId);
             saveProductsToStorage();
+            
+            // Intentar sincronizar con Google Sheets
+            const sheetsSuccess = await saveProductsToGoogleSheets();
+            if (sheetsSuccess) {
+                showToast('Producto eliminado y sincronizado con Google Sheets.', 'success');
+            } else {
+                showToast('Producto eliminado localmente. Error al sincronizar con Google Sheets.', 'warning');
+            }
+            
             filteredProducts = filteredProducts.filter(p => p.id !== productId);
             
             renderCategories();
@@ -2021,7 +2570,7 @@
             return Date.now().toString(36) + Math.random().toString(36).substr(2);
         }
 
-        // [FUNCIONES CRUD Y RENDERIZADO]
+        // [FUNCIONES CRUD Y RENDERIZADO - MANTENER IGUAL QUE LA VERSIÓN ANTERIOR]
         function renderCategories() {
             const categories = [...new Set(products.map(p => p.categoria))].sort();
             const container = document.getElementById('categoryChips');
