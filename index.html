@@ -126,6 +126,14 @@
             margin-top: 0.25rem;
         }
 
+                .logo-img {
+            height: 52px;     /* ajusta según el alto que quieras */
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+
         .nav-buttons {
             display: flex;
             gap: 0.75rem;
@@ -1408,34 +1416,41 @@
 </head>
 <body>
     <!-- Header -->
+
+
     <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <div class="logo-icon"></div>
-                    <div class="logo-text">
-                        <h1>Laboratorios Kumi</h1>
-                        <p>Productos Fitoterapéuticos Premium</p>
-                    </div>
-                </a>
-                <nav class="nav-buttons">
-                    <button class="nav-btn admin-btn" id="adminBtn" onclick="handleAdminAction()">
-                        <i class="fas fa-user-shield"></i>
-                        <span id="adminBtnText">Admin</span>
-                        <span class="admin-badge" id="adminBadge" style="display: none;">!</span>
-                    </button>
-                    <button class="nav-btn" onclick="toggleCart()">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="badge" id="cartBadge">0</span>
-                    </button>
-                    <button class="nav-btn" onclick="toggleWishlist()">
-                        <i class="fas fa-heart"></i>
-                        <span class="badge" id="wishlistBadge">0</span>
-                    </button>
-                </nav>
-            </div>
+    <div class="container">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img 
+                    src="https://github.com/laboratoriokumipy/kumilab_v.1.0/raw/main/Kumi%20Lab%20-%20Horizontal%20-%20Full%20color%20-%20Fondo%20blanco_page-0001%20(2).jpg" 
+                    alt="Laboratorios Kumi" 
+                    class="logo-img"
+                >
+                <div class="logo-text">
+                    <h1>Laboratorios Kumi</h1>
+                    <p>Productos Fitoterapéuticos Premium</p>
+                </div>
+            </a>
+            <nav class="nav-buttons">
+                <button class="nav-btn admin-btn" id="adminBtn" onclick="handleAdminAction()">
+                    <i class="fas fa-user-shield"></i>
+                    <span id="adminBtnText">Admin</span>
+                    <span class="admin-badge" id="adminBadge" style="display: none;">!</span>
+                </button>
+                <button class="nav-btn" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cartBadge">0</span>
+                </button>
+                <button class="nav-btn" onclick="toggleWishlist()">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge" id="wishlistBadge">0</span>
+                </button>
+            </nav>
         </div>
-    </header>
+    </div>
+</header>
+
 
     <!-- Hero Section -->
     <section class="hero">
